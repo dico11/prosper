@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+
+	<style> 
+	div {margin-left: 35px; margin-right: 35px;}
+	h2 {text-align: left;}
+	h2 {font: 24px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+	p {font: 16px/1.3 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; margin-right: 15px;};
+	.switch {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			-webkit-transition: .4s;
+			transition: .4s;
+			}
+   
+	.switch:hover {
+        background-color: #4CAF50;
+		color: white;
+		}
+    .switch:active {
+		background-color: #3e8e41;
+		box-shadow: 0 2px #666;
+		transform: translateY(4px);
+		}
+		
+	</style>
+
+    <script type="text/javascript">
+     function draw(data) {
+
+         "use strict";
+         var margin = 15, width = 1400 - margin, height = 600 - margin;
+
+		d3.select('#container').append('h2').text('Which Prosper Risk indicator is a good loss mitigation?');
+		d3.select('#container').append('p').text('A set of 27.627 closed Prosper loans has been analyzed after cleaning the initial set. Key question was if the offered indicator such as the Prosper Rating or the Prosper Score provide a reliable mitigation for the occurence of losses and if it is stable over time. The result from the previous analysis was proven that the best mitigation is selecting a loan with a Prosper Rating A or AA. Only those are providing loans with a probability of less than 10% for the occurence of losses, but see yourself and toggle the two Prosper risk indicator: ');
+		
+		// adding button
+        var button = d3.select("#container")     
+                         .append("button")
+                           .attr("class","switch")
+                           .text("Toggle Prosper Rating and Prosper Score as risk indicator");
+          
+        // adding SVG element
+        var svg = d3.select("#container")
+			.append("svg")
+				.attr("width", width + margin)
+				.attr("height", height + margin)
+            .append('g')
+				.attr('class','chart');
+					
+		//the initial graph before toggling
+		var graphic = "ProsperRating..Alpha."
+        //Dimple.js Chart construction code
+	  			  
+		function switchGraph(graphic){
+				  				  
+			var myChart = new dimple.chart(svg, data);
+			
+			var x = myChart.addTimeAxis("x", "Date_listed");
+			x.addGroupOrderRule("Date");
+			x.dateParseFormat = '%Y-%m';
+			x.tickFormat = '%m/%Y';
+			x.timePeriod = d3.time.months;
+			x.timeInterval = 2;   
+			myChart.addPctAxis("y", "Losses_occured");
+			myChart.addLegend(60, 40, 600, 20, "center");
+			myChart.add;
+			// defining the series depending on toggling
+			if (graphic == "ProsperRating..Alpha."){
+				var s = myChart.addSeries("ProsperRating..Alpha.", dimple.plot.line);		
+				myChart.addSeries("ProsperRating..Alpha.", dimple.plot.scatter);
+				svg.selectAll("title_text")
+					  .data(["Propability of Losses vs. Prosper Ratings"])
+					  .enter()
+					  .append("text")
+					  .attr("x", 435)
+					  .attr("y", 25)
+					  .style("font-family", "sans-serif")
+					  .style("font-size", "24px")
+					  .style("color", "Black")
+					  .text(function (d) { return d; });
+
+			} else if (graphic == "ProsperScore"){
+				var s = myChart.addSeries("ProsperScore", dimple.plot.line);
+				myChart.addSeries("ProsperScore", dimple.plot.scatter);
+				svg.selectAll("title_text")
+					  .data(["Propability of Losses vs. Prosper Scores"])
+					  .enter()
+					  .append("text")
+					  .attr("x", 435)
+					  .attr("y", 25)
+					  .style("font-family", "sans-serif")
+					  .style("font-size", "24px")
+					  .style("color", "Black")
+					  .text(function (d) { return d; });
+			}
+			myChart.ease = "quad";
+			s.interpolation = "monotone";
+			myChart.draw(2000);
+			};
+		switchGraph(graphic); 
+		
+		// defining action for button click:
+		// remove previous graphic and switch to ProsperScore Rating
+		var count = 0;
+		button.on("click", function() {             
+			count +=1;
+			svg.selectAll("*").remove();
+			if (count%2 === 0){
+				switchGraph("ProsperRating..Alpha.");
+			} else if(count%2 != 0){
+				switchGraph("ProsperScore");
+			}
+		});
+	};
+ 
+      </script>
+  </head>
+<body>
+  <div id="container"></div>
+    <script type="text/javascript">
+  d3.tsv("data.tsv", draw);
+  	</script>
+
+</body>
+</html>
