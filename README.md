@@ -20,7 +20,7 @@ Design steps
 
 ## Feedback 
 
-See enclosed file feedback_visualization.pdf
+See enclosed file https://github.com/dico11/prosper/blob/master/feedback_visualization.pdf
 
 ## Resources 
 
