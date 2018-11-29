@@ -1,4 +1,4 @@
-# Visualization of Probability of Losses from Prosper Lending
+# Visualization of Probability of Losses of Prosper Lending
 
 ## Summary
 
