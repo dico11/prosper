@@ -10,30 +10,28 @@
 	div {margin-left: 35px; margin-right: 35px;}
 	h2 {text-align: left;}
 	h2 {font: 24px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;}
-	p {font: 20px/1.3 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; margin-right: 15px;};
+	p {font: 16px/1.3 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; margin-right: 15px;};
 	.switch {
-            position: center;
-            background-color: white;
-            color: black;
-            border: 4px solid #4CAF50;
-            padding: 25px 32px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 50%;
-            -webkit-transition-duration: 0.4s;
-            transition-duration: 0.4s;
-            outline:none;
-            }
-        .switch:hover {
-            background-color: #4CAF50;
-            color: white;
-            }
-        .switch:active {
-            background-color: #3e8e41;
-            box-shadow: 0 2px #666;
-            transform: translateY(4px);
-            }
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ccc;
+			-webkit-transition: .4s;
+			transition: .4s;
+			}
+   
+	.switch:hover {
+        background-color: #4CAF50;
+		color: white;
+		}
+    .switch:active {
+		background-color: #3e8e41;
+		box-shadow: 0 2px #666;
+		transform: translateY(4px);
+		}
 		
 	</style>
 
@@ -44,7 +42,7 @@
          var margin = 15, width = 1400 - margin, height = 600 - margin;
 
 		d3.select('#container').append('h2').text('Which Prosper Risk indicator is a good loss mitigation?');
-		d3.select('#container').append('p').text('A set of 27.627 closed Prosper loans has been analyzed regarding the propability of losses. Key question was if the offered indicator such as the Prosper Rating or the Prosper Score provide a reliable mitigation for the occurence of losses and if it is stable over time. The result from the previous analysis was proven that the best mitigation is selecting a loan with a Prosper Rating A or AA. Only those are providing loans with a probability of less than 10% for the occurence of losses, but see yourself and toggle the two Prosper risk indicator: ');
+		d3.select('#container').append('p').text('A set of 27.627 closed Prosper loans has been analyzed after cleaning the initial set. Key question was if the offered indicator such as the Prosper Rating or the Prosper Score provide a reliable mitigation for the occurence of losses and if it is stable over time. The result from the previous analysis was proven that the best mitigation is selecting a loan with a Prosper Rating A or AA. Only those are providing loans with a probability of less than 10% for the occurence of losses, but see yourself and toggle the two Prosper risk indicator: ');
 		
 		// adding button
         var button = d3.select("#container")     
